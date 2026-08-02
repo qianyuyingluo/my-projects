@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>一维余弦势能带图</title>
+
+  <link
+    rel="stylesheet"
+    href="../../vendor/katex/katex.min.css"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <aside class="panel">
+      <a class="back-link" href="../../index.html" target="_top">返回首页</a>
+      <h1>平面波展开法能带模拟</h1>
+
+      <div class="card model-card">
+        <h2>物理模型</h2>
+
+        <p class="model-text">
+          周期势采用一维余弦势，波函数满足 Bloch 边界条件。
+        </p>
+
+        <div class="formula-title">余弦周期势：</div>
+        <div class="formula latex">
+          V(x)=2\pi^2q\cos\left(\frac{2\pi x}{a}\right)
+        </div>
+
+        <div class="formula-title">Bloch 边界条件：</div>
+        <div class="formula latex">
+          \psi_k(x+a)=e^{ika}\psi_k(x)
+        </div>
+      </div>
+
+      <div class="card control-card">
+        <h2>参数控制</h2>
+
+        <div class="ctrl">
+          <label>
+            势强参数 q
+            <span id="qText">1.00</span>
+          </label>
+          <input id="qRange" type="range" min="0" max="3" step="0.02" value="1" />
+        </div>
+
+        <div class="ctrl">
+          <label>
+            平面波截断 Gmax
+            <span id="gText">6</span>
+          </label>
+          <input id="gRange" type="range" min="1" max="10" step="1" value="6" />
+        </div>
+
+        <div class="ctrl">
+          <label>
+            显示能带数
+            <span id="bandText">3</span>
+          </label>
+          <input id="bandRange" type="range" min="1" max="6" step="1" value="3" />
+        </div>
+
+        <div class="ctrl">
+          <label>
+            采样点数
+            <span id="kText">161</span>
+          </label>
+          <input id="kRange" type="range" min="81" max="301" step="20" value="161" />
+        </div>
+
+        <div class="check-row">
+          <input id="extendCheck" type="checkbox" checked />
+          <label for="extendCheck">显示扩展布里渊区（左右各 1 个）</label>
+        </div>
+
+        <div class="ctrl">
+          <label>
+            纵坐标下限 Emin
+            <span id="eminText">-10</span>
+          </label>
+          <input id="eminRange" type="range" min="-80" max="40" step="5" value="-10" />
+        </div>
+
+        <div class="ctrl">
+          <label>
+            纵坐标上限 Emax
+            <span id="emaxText">100</span>
+          </label>
+          <input id="emaxRange" type="range" min="40" max="180" step="5" value="100" />
+        </div>
+
+        <button id="resetBtn">恢复默认参数</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="head">
+        <h2>一维余弦势能带图</h2>
+        <p id="infoLine">
+          PWE matrix size: 13 × 13，横坐标固定 ka/π 显示
+        </p>
+      </div>
+
+      <div class="chartBox">
+        <canvas id="chart"></canvas>
+      </div>
+    </main>
+  </div>
+
+  <script
+    defer
+    src="../../vendor/katex/katex.min.js">
+  </script>
+
+  <script defer src="script.js"></script>
+</body>
+</html>

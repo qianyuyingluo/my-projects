@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  font-family: "Microsoft YaHei", Arial, sans-serif;
+  background: #eef6ff;
+  color: #102033;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+.app {
+  width: 100%;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(230px, 24%) minmax(0, 1fr);
+  gap: 10px;
+  padding: 10px;
+  align-items: start;
+}
+
+.left,
+.right {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 24px rgba(40, 95, 140, 0.12);
+}
+
+.left {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #1677c8;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 6px 14px rgba(22, 119, 200, 0.22);
+}
+
+.back-link:hover {
+  background: #0f67af;
+}
+
+.right {
+  padding: 10px;
+  min-height: calc(100dvh - 20px);
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+  color: #0c4a7a;
+  line-height: 1.2;
+}
+
+.formula-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formula-item {
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #d5e8f8;
+}
+
+.formula-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.formula-item p {
+  margin: 0 0 5px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #174a70;
+}
+
+.eq {
+  min-height: 34px;
+  padding: 2px 0;
+  font-size: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.eq .katex-display {
+  margin: 0;
+  text-align: center;
+}
+
+.eq .katex {
+  font-size: 1.08em;
+}
+
+.control-card {
+  margin-top: 0;
+}
+
+label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  font-size: 13px;
+  color: #19364f;
+}
+
+label:first-child {
+  margin-top: 0;
+}
+
+label b {
+  font-weight: 600;
+  color: #0c4a7a;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0;
+  accent-color: #1677c8;
+}
+
+.btns {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 6px;
+  cursor: pointer;
+  background: #dceeff;
+  color: #174a70;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+button.active {
+  background: #1677c8;
+  color: white;
+}
+
+.note-card p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #31526b;
+}
+
+canvas {
+  width: 100%;
+  height: calc(100dvh - 40px);
+  min-height: 560px;
+  display: block;
+}
+
+/* 窄屏、手机或竖屏时自动上下排列 */
+@media (max-width: 760px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .right {
+    min-height: 55dvh;
+  }
+
+  canvas {
+    height: 55dvh;
+    min-height: 380px;
+  }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Einstein 与 Debye 模型对比</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+  <script defer src="../../vendor/katex/katex.min.js"></script>
+  <script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <a class="back-link" href="../../index.html" target="_top">返回首页</a>
+      <h1>Einstein 与 Debye 模型热容对比</h1>
+      <p>左侧调节参数，右侧查看热容曲线，下方统一展示主要公式与状态信息。</p>
+    </header>
+
+    <section class="sim-grid">
+      <div class="control-card">
+        <h2>参数设置</h2>
+
+        <div class="control-block">
+          <div class="row-title">Einstein 温度 ΘE</div>
+          <input id="thetaERange" type="range" min="50" max="800" step="10" value="200">
+          <div class="value-row">
+            <input id="thetaE" type="number" min="50" max="800" step="10" value="200">
+            <span class="value-tag" id="thetaEText">200</span>
+          </div>
+        </div>
+
+        <div class="control-block">
+          <div class="row-title">Debye 温度 ΘD</div>
+          <input id="thetaDRange" type="range" min="50" max="800" step="10" value="200">
+          <div class="value-row">
+            <input id="thetaD" type="number" min="50" max="800" step="10" value="200">
+            <span class="value-tag" id="thetaDText">200</span>
+          </div>
+        </div>
+
+        <div class="control-block">
+          <div class="row-title">温度上限 Tmax</div>
+          <input id="tMaxRange" type="range" min="100" max="1200" step="20" value="600">
+          <div class="value-row">
+            <input id="tMax" type="number" min="100" max="1200" step="20" value="600">
+            <span class="value-tag" id="tMaxText">600</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="resetBtn">恢复默认</button>
+        </div>
+      </div>
+
+      <section class="chart-card">
+        <div class="card-title">热容对比图</div>
+        <canvas id="heatCanvas"></canvas>
+        <div class="legend">
+          <span class="legend-item"><i class="line blue"></i> Einstein 模型</span>
+          <span class="legend-item"><i class="line red"></i> Debye 模型</span>
+        </div>
+      </section>
+    </section>
+
+    <section class="info-card">
+      <h2>主要公式</h2>
+      <div class="formula-layout">
+        <div id="formulaBox" class="formula-box">
+          <div class="formula-line">$$\frac{C_V^{(E)}}{3Nk}=\frac{x^2e^x}{(e^x-1)^2},\quad x=\frac{\Theta_E}{T}$$</div>
+          <div class="formula-line">$$\frac{C_V^{(D)}}{3Nk}=3\left(\frac{T}{\Theta_D}\right)^3\int_0^{\Theta_D/T}\frac{x^4e^x}{(e^x-1)^2}\,dx$$</div>
+          <div class="formula-line">$$T\gg\Theta_E,\Theta_D\quad\Rightarrow\quad C_V\to 3Nk$$</div>
+        </div>
+
+        <div class="status-box">
+          <div><strong>Einstein 高温端：</strong><span id="einHighText">1.000</span></div>
+          <div><strong>Debye 高温端：</strong><span id="debHighText">1.000</span></div>
+          <div><strong>横坐标：</strong><span>T/ΘD</span></div>
+          <div><strong>纵坐标：</strong><span>C<sub>V</sub> / 3Nk</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

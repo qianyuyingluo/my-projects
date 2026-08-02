@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>统计分布函数</title>
+
+  <link
+    rel="stylesheet"
+    href="../../vendor/katex/katex.min.css"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="main-card">
+      <div class="title-bar">
+        <a class="back-link" href="../../index.html" target="_top">返回首页</a>
+        <h1>统计分布函数</h1>
+      </div>
+
+      <div class="content">
+        <div class="left-panel">
+          <div class="item be">
+            <div class="bullet"></div>
+            <div class="text-block">
+              <div class="name">Bose-Einstein</div>
+              <div id="eq-be" class="equation"></div>
+            </div>
+          </div>
+
+          <div class="item mb">
+            <div class="bullet"></div>
+            <div class="text-block">
+              <div class="name">Maxwell-Boltzmann</div>
+              <div id="eq-mb" class="equation"></div>
+            </div>
+          </div>
+
+          <div class="item fd">
+            <div class="bullet"></div>
+            <div class="text-block">
+              <div class="name">Fermi-Dirac</div>
+              <div id="eq-fd" class="equation"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-panel">
+          <canvas id="chart" width="900" height="560"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="../../vendor/katex/katex.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

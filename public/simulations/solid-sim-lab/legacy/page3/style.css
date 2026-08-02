@@ -1,0 +1,263 @@
+:root{
+  --bg:#d6efff;
+  --card:#ffffff;
+  --line:#b7dff5;
+  --text:#17324a;
+  --sub:#4f6f86;
+  --blue:#3aaef5;
+  --blue-soft:#6ec6ff;
+  --red:#dc2626;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.app{
+  width:min(1440px,100%);
+  min-height:100vh;
+  margin:0 auto;
+  padding:16px;
+}
+
+.hero{
+  margin-bottom:12px;
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#67cfff;
+  color:#ffffff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  box-shadow:0 6px 14px rgba(103,207,255,.28);
+}
+
+.back-link:hover{
+  background:#59c5f8;
+}
+
+.hero h1{
+  margin:0 0 6px;
+  font-size:clamp(26px,2.8vw,38px);
+}
+
+.hero p{
+  margin:0;
+  color:var(--sub);
+  font-size:14px;
+  line-height:1.6;
+}
+
+.chart-card,.control-card,.info-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 10px 24px rgba(58,174,245,.12);
+}
+
+.sim-grid{
+  display:grid;
+  grid-template-columns:minmax(260px,1fr) minmax(0,3fr);
+  gap:16px;
+  align-items:stretch;
+  height:clamp(430px,calc(100vh - 170px),620px);
+}
+
+.chart-card{
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+
+.card-title{
+  margin:0 0 10px;
+  font-size:18px;
+  font-weight:700;
+}
+
+canvas{
+  width:100%;
+  flex:1 1 0;
+  min-height:0;
+  display:block;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.legend{
+  margin-top:8px;
+  color:#33556e;
+  font-size:13px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.legend-item{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+.line{
+  width:26px;
+  height:0;
+  border-top:4px solid;
+  display:inline-block;
+  border-radius:999px;
+}
+
+.line.blue{ border-color:var(--blue); }
+.line.red{ border-color:var(--red); }
+
+.control-card,.info-card{
+  padding:16px;
+}
+
+.control-card h2,.info-card h2{
+  margin:0 0 10px;
+  font-size:20px;
+}
+
+.control-card{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  overflow:auto;
+}
+
+.control-block{
+  margin-bottom:10px;
+}
+
+.row-title{
+  display:block;
+  margin-bottom:4px;
+  color:#2c5168;
+  font-size:13px;
+  font-weight:600;
+}
+
+input[type="number"]{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  font-size:14px;
+  background:#fff;
+  color:var(--text);
+}
+
+input[type="range"]{
+  width:100%;
+  accent-color:var(--blue);
+  margin:2px 0 6px;
+}
+
+.value-row{
+  display:grid;
+  grid-template-columns:1fr 64px;
+  gap:8px;
+  align-items:center;
+}
+
+.value-tag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:36px;
+  border-radius:10px;
+  background:#e9f8ff;
+  border:1px solid var(--line);
+  color:#1684c9;
+  font-weight:700;
+  font-size:13px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:auto;
+  padding-top:6px;
+}
+
+button{
+  border:none;
+  border-radius:10px;
+  padding:9px 14px;
+  font-size:13px;
+  cursor:pointer;
+  background:var(--blue-soft);
+  color:#0f3550;
+  font-weight:700;
+  box-shadow:0 6px 14px rgba(110,198,255,.35);
+}
+
+button:hover{
+  background:#87d4ff;
+}
+
+.info-card{
+  margin-top:16px;
+}
+
+.formula-layout{
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(240px,1fr);
+  gap:16px;
+  align-items:start;
+}
+
+.formula-box{
+  min-height:180px;
+  background:#f5fcff;
+  border-left:4px solid var(--blue);
+  border-radius:12px;
+  padding:14px;
+  overflow:auto;
+  line-height:1.9;
+}
+
+.formula-line{
+  margin:10px 0;
+}
+
+.status-box{
+  background:#f5fcff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+  color:#33556e;
+  line-height:1.9;
+  font-size:14px;
+}
+
+@media (max-width: 1024px){
+  .app{ padding:14px; }
+  .sim-grid{
+    grid-template-columns:1fr;
+    height:auto;
+  }
+  .chart-card{ min-height:360px; }
+  .formula-layout{ grid-template-columns:1fr; }
+}
+
+@media (max-width: 680px){
+  .chart-card{ min-height:320px; }
+}

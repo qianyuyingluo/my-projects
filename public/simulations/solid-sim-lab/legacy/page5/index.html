@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>低温下的金属热导</title>
+  <link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="app-card">
+      <header class="page-header panel-block">
+        <a class="back-link" href="../../index.html" target="_top">返回首页</a>
+        <h1>低温下的金属热导</h1>
+      </header>
+
+      <section class="left-panel">
+        <div class="formula-section panel-block">
+          <div class="section-title">公式展示</div>
+          <div id="formula" class="formula"></div>
+        </div>
+
+        <div class="controls-section panel-block">
+          <div class="section-title">参数调节</div>
+
+          <div class="control-item">
+            <label for="alphaSlider">\( \alpha \)</label>
+            <input id="alphaSlider" type="range" min="0.1" max="5" step="0.1" value="1.0" />
+            <span id="alphaValue" class="value-badge">1.0</span>
+          </div>
+
+          <div class="control-item">
+            <label for="betaSlider">\( \beta \)</label>
+            <input id="betaSlider" type="range" min="0.1" max="10" step="0.1" value="0.5" />
+            <span id="betaValue" class="value-badge">0.5</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="right-panel panel-block chart-section">
+        <div class="chart-header">
+          <div class="section-title">图像</div>
+          <div class="parameter-badge" id="parameterBadge">α = 1.0, β = 0.5</div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="plotCanvas" width="1240" height="760" aria-label="K_el 曲线图"></canvas>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script defer src="../../vendor/katex/katex.min.js"></script>
+  <script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>一维原子链色散关系仿真</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+  <script defer src="../../vendor/katex/katex.min.js"></script>
+  <script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <a class="back-link" href="../../index.html" target="_top">返回首页</a>
+      <h1>一维原子链色散关系仿真</h1>
+      <p>左侧显示模型说明或参数，右侧实时显示色散关系，下方集中展示主要公式与状态。</p>
+    </header>
+
+    <section class="sim-grid">
+      <div class="control-card">
+        <h2 id="sidePanelTitle">公式说明</h2>
+
+        <label>
+          <span>模型</span>
+          <select id="model">
+            <option value="mono">一维单原子链</option>
+            <option value="di">一维双原子链</option>
+          </select>
+        </label>
+
+        <div id="monoPanel" class="mono-panel">
+          <p class="mono-note">一维单原子链采用标准化参数绘图，不提供额外调节项，左侧区域改为公式说明。</p>
+          <div id="sideFormulaBox" class="side-formula-box"></div>
+        </div>
+
+        <div id="diControls" class="hidden">
+          <div class="grid-2">
+            <div class="control-block">
+              <div class="row-title">质量 M₁</div>
+              <input id="diM1Range" type="range" min="0.5" max="5.0" step="0.1" value="1.0">
+              <div class="value-row">
+                <input id="diM1" type="number" min="0.5" max="5.0" step="0.1" value="1.0" />
+                <span class="value-tag" id="diM1Text">1.0</span>
+              </div>
+            </div>
+
+            <div class="control-block">
+              <div class="row-title">质量 M₂</div>
+              <input id="diM2Range" type="range" min="0.5" max="5.0" step="0.1" value="2.0">
+              <div class="value-row">
+                <input id="diM2" type="number" min="0.5" max="5.0" step="0.1" value="2.0" />
+                <span class="value-tag" id="diM2Text">2.0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="control-block">
+              <div class="row-title">力常数 C₁</div>
+              <input id="diC1Range" type="range" min="0.5" max="5.0" step="0.1" value="1.0">
+              <div class="value-row">
+                <input id="diC1" type="number" min="0.5" max="5.0" step="0.1" value="1.0" />
+                <span class="value-tag" id="diC1Text">1.0</span>
+              </div>
+            </div>
+
+            <div class="control-block">
+              <div class="row-title">力常数 C₂</div>
+              <input id="diC2Range" type="range" min="0.5" max="5.0" step="0.1" value="1.0">
+              <div class="value-row">
+                <input id="diC2" type="number" min="0.5" max="5.0" step="0.1" value="1.0" />
+                <span class="value-tag" id="diC2Text">1.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="resetBtn">恢复默认</button>
+        </div>
+      </div>
+
+      <section class="top-card">
+        <div class="card-title">色散关系</div>
+        <canvas id="dispersionCanvas"></canvas>
+        <div class="legend" id="legendText">蓝色曲线：单原子链色散关系</div>
+      </section>
+    </section>
+
+    <section class="info-card">
+      <h2>主要公式与状态</h2>
+      <div class="formula-layout">
+        <div id="formulaBox" class="formula-box"></div>
+
+        <div class="status-box">
+          <div><strong>当前模型：</strong><span id="modeText">一维单原子链</span></div>
+          <div><strong>公式模式：</strong><span id="formulaModeText">—</span></div>
+          <div><strong>单原子链频率上限：</strong><span id="omegaMonoText">0.000</span></div>
+          <div><strong>双原子链声学支上限：</strong><span id="omegaAcousticText">—</span></div>
+          <div><strong>双原子链光学支上限：</strong><span id="omegaOpticalText">—</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>一维原子链振动模拟</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="../../vendor/katex/katex.min.css" />
+  <script defer src="../../vendor/katex/katex.min.js"></script>
+  <script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <a class="back-link" href="../../index.html" target="_top">返回首页</a>
+      <h1>一维原子链振动模拟</h1>
+      </header>
+
+    <section class="sim-grid">
+      <div class="control-card">
+        <h2 id="sidePanelTitle">公式说明</h2>
+
+        <label>
+          <span>模型</span>
+          <select id="model">
+            <option value="mono">一维单原子链</option>
+            <option value="di">一维双原子链</option>
+          </select>
+        </label>
+
+        <div id="monoPanel" class="mono-panel">
+          <div id="sideFormulaBox" class="side-formula-box"></div>
+        </div>
+
+        <div id="diControls" class="hidden">
+          <div class="grid-2">
+            <div class="control-block">
+              <div class="row-title">质量 M1</div>
+              <input id="diM1Range" type="range" min="0.5" max="5.0" step="0.1" value="1.0" />
+              <div class="value-row">
+                <input id="diM1" type="number" min="0.5" max="5.0" step="0.1" value="1.0" />
+                <span class="value-tag" id="diM1Text">1.0</span>
+              </div>
+            </div>
+
+            <div class="control-block">
+              <div class="row-title">质量 M2</div>
+              <input id="diM2Range" type="range" min="0.5" max="5.0" step="0.1" value="2.0" />
+              <div class="value-row">
+                <input id="diM2" type="number" min="0.5" max="5.0" step="0.1" value="2.0" />
+                <span class="value-tag" id="diM2Text">2.0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="control-block">
+              <div class="row-title">力常数 C1</div>
+              <input id="diC1Range" type="range" min="0.5" max="5.0" step="0.1" value="1.0" />
+              <div class="value-row">
+                <input id="diC1" type="number" min="0.5" max="5.0" step="0.1" value="1.0" />
+                <span class="value-tag" id="diC1Text">1.0</span>
+              </div>
+            </div>
+
+            <div class="control-block">
+              <div class="row-title">力常数 C2</div>
+              <input id="diC2Range" type="range" min="0.5" max="5.0" step="0.1" value="1.0" />
+              <div class="value-row">
+                <input id="diC2" type="number" min="0.5" max="5.0" step="0.1" value="1.0" />
+                <span class="value-tag" id="diC2Text">1.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="resetBtn" type="button">恢复默认</button>
+        </div>
+      </div>
+
+      <section class="top-card">
+        <div class="scene-header">
+          <div>
+            <div class="card-title">一维原子链振动</div>
+            <div class="scene-subtitle" id="sceneSubtitle">固定演示波矢为 ka = π/2，可拖拽改变观察方向。</div>
+          </div>
+
+          <div class="scene-actions">
+            <div id="branchGroup" class="branch-group hidden">
+              <button id="acousticBtn" class="ghost-btn active" type="button">声学支</button>
+              <button id="opticalBtn" class="ghost-btn" type="button">光学支</button>
+            </div>
+            <button id="resetViewBtn" type="button">重置默认方向</button>
+          </div>
+        </div>
+
+        <div id="sceneViewport" class="scene-viewport" aria-label="一维原子链三维振动视图"></div>
+        <div class="legend" id="legendText">蓝色球表示原子，深蓝连线表示弹簧。拖拽旋转，滚轮或双指缩放。</div>
+      </section>
+    </section>
+
+    <section class="info-card">
+      <h2>主要公式与状态</h2>
+      <div class="formula-layout">
+        <div id="formulaBox" class="formula-box"></div>
+
+        <div class="status-box">
+          <div class="status-row">
+            <span class="status-label">当前模型</span>
+            <span class="status-value" id="modeText">一维单原子链</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">公式模式</span>
+            <span class="status-value" id="formulaModeText">标准化参数</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">演示波矢</span>
+            <span class="status-value" id="demoWaveText">ka = π/2</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">当前分支</span>
+            <span class="status-value" id="branchText">单支</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">演示频率</span>
+            <span class="status-value" id="omegaDemoText">0.000</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">振幅比 |v/u|</span>
+            <span class="status-value" id="amplitudeRatioText">1.000</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">相位差</span>
+            <span class="status-value" id="phaseOffsetText">0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

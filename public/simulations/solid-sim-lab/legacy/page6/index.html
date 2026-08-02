@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>低温金属热容曲线</title>
+
+  <link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <main class="app">
+    <section class="left">
+      <a class="back-link" href="../../index.html" target="_top">返回首页</a>
+      <h1>自由电子气体热容公式</h1>
+
+      <div class="formula-card">
+        <div class="formula-item">
+          <p>电子热容：</p>
+          <div class="eq" data-eq="C_{el}=\gamma T"></div>
+        </div>
+
+        <div class="formula-item">
+          <p>晶格热容：</p>
+          <div class="eq" data-eq="C_{lat}=aT^3"></div>
+        </div>
+
+        <div class="formula-item">
+          <p>总热容：</p>
+          <div class="eq" data-eq="C=C_{el}+C_{lat}=\gamma T+aT^3"></div>
+        </div>
+
+        <div class="formula-item">
+          <p>线性形式：</p>
+          <div class="eq" data-eq="\frac{C}{T}=\gamma+aT^2"></div>
+        </div>
+      </div>
+
+      <div class="control-card">
+        <label>
+          <span>Sommerfeld 系数 γ</span>
+          <b id="gammaText"></b>
+        </label>
+        <input id="gamma" type="range" min="0.1" max="3" step="0.1" value="1" />
+
+        <label>
+          <span>晶格系数 a</span>
+          <b id="aText"></b>
+        </label>
+        <input id="aCoef" type="range" min="0.0001" max="0.005" step="0.0001" value="0.001" />
+
+        <label>
+          <span>最高温度 Tmax</span>
+          <b id="tText"></b>
+        </label>
+        <input id="tMax" type="range" min="20" max="200" step="1" value="100" />
+
+        <div class="btns">
+          <button id="modeCT" class="active">画 C-T 图</button>
+          <button id="modeLinear">画 C/T-T² 图</button>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <p>
+          这个仿真使用低温金属热容模型。电子热容与温度成正比，晶格热容与温度三次方成正比。
+        </p>
+      </div>
+    </section>
+
+    <section class="right">
+      <canvas id="chart"></canvas>
+    </section>
+  </main>
+
+  <script src="../../vendor/katex/katex.min.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
