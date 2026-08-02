@@ -966,6 +966,35 @@ a:focus-visible {
   -webkit-backdrop-filter: blur(22px) saturate(145%);
 }
 
+/* Scientific Simulation detail cards sit compactly over the center of the source artwork. */
+.theme-simulation .research-hero-content {
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  width: min(26rem, 34vw);
+  padding: clamp(1rem, 1.6vw, 1.35rem);
+  transform: translate(-50%, -50%);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(16px) saturate(132%);
+  -webkit-backdrop-filter: blur(16px) saturate(132%);
+}
+
+.theme-simulation .research-kicker {
+  margin-bottom: 0.7rem;
+  font-size: 0.72rem;
+}
+
+.theme-simulation .research-hero h1 {
+  font-size: clamp(1.75rem, 2.8vw, 3.05rem);
+  line-height: 1.02;
+}
+
+.theme-simulation .research-status {
+  margin-top: 0.9rem;
+  font-size: 0.74rem;
+}
+
 .research-kicker {
   display: inline-flex;
   align-items: center;
@@ -2219,6 +2248,21 @@ a:focus-visible {
     justify-content: center;
     padding: 1.1rem 1.15rem;
     transform: none;
+  }
+
+  .theme-simulation .research-hero-content {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: calc(100% - 2rem);
+    max-width: 24rem;
+    padding: 1rem;
+    transform: translate(-50%, -50%);
+  }
+
+  .theme-simulation .research-hero h1 {
+    font-size: clamp(1.65rem, 7.5vw, 2.35rem);
   }
 
   .detail-portrait .research-hero-content {
