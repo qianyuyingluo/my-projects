@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { ArrowRight, ChevronDown, Github, MoveUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { categories, projectRepositoryName, projects, projectsByCategory, type CategoryId } from "../data/projects";
@@ -9,6 +9,11 @@ const imageUrl = (path: string) => new URL(path, document.baseURI).toString();
 export default function HomePage() {
   const reduceMotion = useReducedMotion();
   const [activeSection, setActiveSection] = useState("github");
+  const [isDraggingDots, setIsDraggingDots] = useState(false);
+  const sectionDotsRef = useRef<HTMLElement | null>(null);
+  const dragDotsRef = useRef<{ pointerId: number; startY: number; moved: boolean } | null>(null);
+  const suppressDotClickRef = useRef(false);
+  const isDraggingDotsRef = useRef(false);
   const sectionIds = useMemo(() => ["github", ...categories.map((category) => category.id)], []);
   const navigationSections = useMemo(
     () => [
@@ -25,7 +30,7 @@ export default function HomePage() {
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        if (visible?.target.id) {
+        if (visible?.target.id && !isDraggingDotsRef.current) {
           setActiveSection(visible.target.id as CategoryId | "github");
         }
       },
@@ -47,6 +52,54 @@ export default function HomePage() {
     });
   };
 
+  const nearestSectionAt = (clientY: number) => {
+    const root = sectionDotsRef.current;
+    if (!root) return null;
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>(".section-dot"));
+    if (!buttons.length) return null;
+    return buttons.reduce((nearest, button) => {
+      const distance = Math.abs(button.getBoundingClientRect().top + button.offsetHeight / 2 - clientY);
+      return distance < nearest.distance ? { id: button.dataset.sectionId ?? "github", distance } : nearest;
+    }, { id: "github", distance: Number.POSITIVE_INFINITY }).id;
+  };
+
+  const handleDotsPointerDown = (event: ReactPointerEvent<HTMLElement>) => {
+    const target = (event.target as HTMLElement).closest<HTMLButtonElement>(".section-dot");
+    if (!target || (event.pointerType === "mouse" && event.button !== 0)) return;
+    dragDotsRef.current = { pointerId: event.pointerId, startY: event.clientY, moved: false };
+    suppressDotClickRef.current = false;
+  };
+
+  const handleDotsPointerMove = (event: ReactPointerEvent<HTMLElement>) => {
+    const drag = dragDotsRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (!drag.moved && Math.abs(event.clientY - drag.startY) < 8) return;
+    if (!drag.moved) {
+      drag.moved = true;
+      suppressDotClickRef.current = true;
+      isDraggingDotsRef.current = true;
+      setIsDraggingDots(true);
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+    const nearest = nearestSectionAt(event.clientY);
+    if (nearest) {
+      event.preventDefault();
+      setActiveSection(nearest);
+    }
+  };
+
+  const handleDotsPointerUp = (event: ReactPointerEvent<HTMLElement>) => {
+    const drag = dragDotsRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (drag.moved) {
+      const nearest = nearestSectionAt(event.clientY) ?? activeSection;
+      scrollToSection(nearest);
+    }
+    dragDotsRef.current = null;
+    isDraggingDotsRef.current = false;
+    setIsDraggingDots(false);
+  };
+
   return (
     <div className="portfolio-shell">
       <header className="site-header" aria-label="Site header">
@@ -64,15 +117,32 @@ export default function HomePage() {
         </div>
       </header>
 
-      <nav className="section-dots" aria-label="Research directions">
+      <nav
+        ref={sectionDotsRef}
+        className={isDraggingDots ? "section-dots is-dragging" : "section-dots"}
+        aria-label="Research directions"
+        onPointerDown={handleDotsPointerDown}
+        onPointerMove={handleDotsPointerMove}
+        onPointerUp={handleDotsPointerUp}
+        onPointerCancel={handleDotsPointerUp}
+      >
         {navigationSections.map((category) => (
           <button
             key={category.id}
             className={activeSection === category.id ? "section-dot is-active" : "section-dot"}
             type="button"
+            data-section-id={category.id}
             aria-label={`Go to ${category.title}`}
             aria-current={activeSection === category.id ? "true" : undefined}
-            onClick={() => scrollToSection(category.id)}
+            aria-grabbed={activeSection === category.id && isDraggingDots ? "true" : undefined}
+            onClick={(event) => {
+              if (suppressDotClickRef.current) {
+                event.preventDefault();
+                suppressDotClickRef.current = false;
+                return;
+              }
+              scrollToSection(category.id);
+            }}
           >
             <span>{category.index}</span>
           </button>

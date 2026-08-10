@@ -675,6 +675,13 @@ a:focus-visible {
   box-shadow: 0 0.8rem 2rem rgba(37, 54, 81, 0.1);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  touch-action: pan-x;
+  user-select: none;
+}
+
+.section-dots.is-dragging {
+  cursor: grabbing;
+  box-shadow: 0 1rem 2.6rem rgba(37, 54, 81, 0.18), 0 0 0 0.2rem rgba(255, 255, 255, 0.3);
 }
 
 .section-dot {
@@ -691,6 +698,7 @@ a:focus-visible {
   font-weight: 700;
   cursor: pointer;
   transition: transform 160ms ease-out, color 160ms ease-out, background 160ms ease-out;
+  touch-action: none;
 }
 
 .section-dot:hover {

@@ -250,6 +250,26 @@ def main() -> int:
                         f"Project navigator wheel leaked into homepage scrolling: {before_scroll} -> {after_scroll}"
                     )
 
+                if viewport["width"] > 900:
+                    first_dot = page.locator(".section-dot").nth(0).bounding_box()
+                    last_dot = page.locator(".section-dot").nth(4).bounding_box()
+                    if first_dot is None or last_dot is None:
+                        raise AssertionError("Section dot geometry is unavailable for drag testing")
+                    start = (first_dot["x"] + first_dot["width"] / 2, first_dot["y"] + first_dot["height"] / 2)
+                    end = (last_dot["x"] + last_dot["width"] / 2, last_dot["y"] + last_dot["height"] / 2)
+                    page.mouse.move(*start)
+                    page.mouse.down()
+                    page.mouse.move(*end, steps=8)
+                    page.mouse.up()
+                    page.wait_for_timeout(650)
+                    if not page.locator(".section-dot").nth(4).get_attribute("aria-current") == "true":
+                        raise AssertionError("Dragging section dots did not select the last section")
+                    drag_stage = page.evaluate(
+                        "() => document.elementFromPoint(innerWidth / 2, innerHeight / 2)?.closest('.project-stage')?.id"
+                    )
+                    if drag_stage != "agents":
+                        raise AssertionError(f"Dragging section dots did not scroll to agents: {drag_stage}")
+
                 if page.locator(".profile-dashboard img").count() != 3:
                     raise AssertionError("Expected three enhanced profile visuals")
                 incomplete_profile_images = page.locator(".profile-dashboard img").evaluate_all(
