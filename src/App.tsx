@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import HomePage from "./components/HomePage";
 import LaserNondimensionalizationPage from "./components/LaserNondimensionalizationPage";
 import ProjectPage from "./components/ProjectPage";
@@ -24,7 +24,18 @@ export default function App() {
   const path = useHashPath();
 
   useEffect(() => {
-    if (path !== "/") window.scrollTo({ top: 0, behavior: "instant" });
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [path]);
 
   if (path === "/") return <HomePage />;

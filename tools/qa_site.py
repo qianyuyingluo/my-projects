@@ -633,6 +633,41 @@ def main() -> int:
                     raise AssertionError(f"Lingyin Agent stage did not snap into view: {active_stage_top}")
                 assert_no_overflow(page, f"{label} Lingyin Agent")
                 page.screenshot(path=OUTPUT / f"agent-lingyin-{label}.png")
+
+                page.locator(".nav-back").evaluate("node => node.click()")
+                page.wait_for_selector(".profile-stage")
+                page.wait_for_timeout(400)
+                agent_return = page.evaluate(
+                    """() => ({
+                      hash: location.hash,
+                      y: Math.round(scrollY),
+                      stage: document.elementFromPoint(innerWidth / 2, innerHeight / 2)
+                        ?.closest('.project-stage')?.id,
+                    })"""
+                )
+                if agent_return != {"hash": "#/", "y": 0, "stage": "github"}:
+                    raise AssertionError(
+                        f"Lingyin Agent did not return to the top of the homepage: {agent_return}"
+                    )
+
+                page.goto(f"{BASE_URL}/#/projects/solid-sim-lab", wait_until="networkidle")
+                page.evaluate("scrollTo(0, document.documentElement.scrollHeight)")
+                page.wait_for_timeout(250)
+                page.locator(".nav-back").evaluate("node => node.click()")
+                page.wait_for_selector(".profile-stage")
+                page.wait_for_timeout(400)
+                project_return = page.evaluate(
+                    """() => ({
+                      hash: location.hash,
+                      y: Math.round(scrollY),
+                      stage: document.elementFromPoint(innerWidth / 2, innerHeight / 2)
+                        ?.closest('.project-stage')?.id,
+                    })"""
+                )
+                if project_return != {"hash": "#/", "y": 0, "stage": "github"}:
+                    raise AssertionError(
+                        f"Long project page did not return to the top of the homepage: {project_return}"
+                    )
                 page.close()
 
             route_page = browser.new_page(viewport={"width": 1024, "height": 768})
