@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import HomePage from "./components/HomePage";
 import LaserNondimensionalizationPage from "./components/LaserNondimensionalizationPage";
 import ProjectPage from "./components/ProjectPage";
+import { consumeHomeSection } from "./navigation";
 
 const readHashPath = () => {
   const rawPath = window.location.hash.slice(1) || "/";
@@ -36,6 +37,18 @@ export default function App() {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
+
+    if (path === "/") {
+      const returnSection = consumeHomeSection();
+      if (returnSection) {
+        window.requestAnimationFrame(() => {
+          document.getElementById(returnSection)?.scrollIntoView({
+            behavior: "instant",
+            block: "start",
+          });
+        });
+      }
+    }
   }, [path]);
 
   if (path === "/") return <HomePage />;

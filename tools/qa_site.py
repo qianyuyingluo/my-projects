@@ -612,6 +612,7 @@ def main() -> int:
                 page.wait_for_timeout(250)
                 page.screenshot(path=OUTPUT / f"tool-localdrop-stack-{label}.png")
 
+                page.evaluate("sessionStorage.clear()")
                 page.goto(f"{BASE_URL}/#/projects/labflow-ai", wait_until="networkidle")
                 page.wait_for_selector(".agent-evolution-page")
                 page.wait_for_timeout(500)

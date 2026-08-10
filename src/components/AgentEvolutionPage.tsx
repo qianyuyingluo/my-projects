@@ -12,6 +12,7 @@ import {
   Workflow,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import { rememberHomeSection } from "../navigation";
 
 const imageUrl = (path: string) => new URL(path, document.baseURI).toString();
 
@@ -266,6 +267,7 @@ export default function AgentEvolutionPage({ activeSlug }: AgentEvolutionPagePro
                   key={stage.slug}
                   className={stage.slug === activeStage.slug ? "agent-route-step is-active" : "agent-route-step"}
                   href={`#/projects/${stage.slug}`}
+                  onClick={() => rememberHomeSection("agents")}
                   aria-current={stage.slug === activeStage.slug ? "page" : undefined}
                 >
                   <span>{stage.index}</span>

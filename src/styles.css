@@ -724,7 +724,8 @@ a:focus-visible {
 
 .research-nav-actions {
   position: fixed;
-  z-index: 50;
+  z-index: 1000;
+  pointer-events: auto;
   top: max(0.7rem, env(safe-area-inset-top));
   right: max(0.7rem, env(safe-area-inset-right));
   padding: 0.32rem;

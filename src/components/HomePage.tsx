@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointer
 import { ArrowRight, ChevronDown, Github, MoveUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { categories, projectRepositoryName, projects, projectsByCategory, type CategoryId } from "../data/projects";
+import { rememberHomeSection } from "../navigation";
 import ProjectFerrisWheel from "./ProjectFerrisWheel";
 
 const imageUrl = (path: string) => new URL(path, document.baseURI).toString();
@@ -252,7 +253,11 @@ export default function HomePage() {
                       whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                       transition={{ type: "spring", bounce: 0, duration: 0.3 }}
                     >
-                      <a className="project-action" href={`#/projects/${project.slug}`}>
+                      <a
+                        className="project-action"
+                        href={`#/projects/${project.slug}`}
+                        onClick={() => rememberHomeSection(category.id)}
+                      >
                         <span>{projectRepositoryName(project)}</span>
                         <MoveUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
                       </a>

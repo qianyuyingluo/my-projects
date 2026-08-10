@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } f
 import { MoveUpRight, Pause, Play } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { projectRepositoryName, type Project } from "../data/projects";
+import { rememberHomeSection } from "../navigation";
 
 interface ProjectFerrisWheelProps {
   projects: Project[];
@@ -132,6 +133,7 @@ export default function ProjectFerrisWheel({ projects }: ProjectFerrisWheelProps
               key={project.slug}
               className={active ? "project-ferris-item is-active" : "project-ferris-item"}
               href={`#/projects/${project.slug}`}
+              onClick={() => rememberHomeSection(project.category)}
               data-project-slug={project.slug}
               aria-current={active ? "true" : undefined}
               aria-hidden={!visible}
