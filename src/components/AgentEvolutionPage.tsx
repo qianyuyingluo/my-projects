@@ -235,20 +235,20 @@ export default function AgentEvolutionPage({ activeSlug }: AgentEvolutionPagePro
       className="agent-evolution-page theme-agents"
       style={{ "--agent-hero-image": `url("${imageUrl("images/agents-sr.jpg")}")` } as React.CSSProperties}
     >
+      <div className="research-nav-actions">
+        <a className="nav-back" href="#/">
+          <ArrowLeft size={16} aria-hidden="true" />
+          <span>All projects</span>
+        </a>
+        <a className="nav-repository" href={activeStage.repositoryUrl} target="_blank" rel="noreferrer">
+          <Github size={16} aria-hidden="true" />
+          <span>Repository</span>
+        </a>
+      </div>
       <main className="agent-evolution-main">
         <section id="agent-overview" className="agent-evolution-hero" aria-labelledby="agent-evolution-title">
           <div className="agent-evolution-art" aria-hidden="true" />
           <div className="agent-evolution-wash" aria-hidden="true" />
-          <div className="research-nav-actions">
-            <a className="nav-back" href="#/">
-              <ArrowLeft size={16} aria-hidden="true" />
-              <span>All projects</span>
-            </a>
-            <a className="nav-repository" href={activeStage.repositoryUrl} target="_blank" rel="noreferrer">
-              <Github size={16} aria-hidden="true" />
-              <span>Repository</span>
-            </a>
-          </div>
           <motion.div
             className="agent-hero-glass"
             initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.985 }}

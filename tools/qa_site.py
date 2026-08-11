@@ -655,7 +655,22 @@ def main() -> int:
                 assert_no_overflow(page, f"{label} Lingyin Agent")
                 page.screenshot(path=OUTPUT / f"agent-lingyin-{label}.png")
 
-                page.locator(".nav-back").evaluate("node => node.click()")
+                nav_back = page.locator(".nav-back")
+                nav_back_box = nav_back.bounding_box()
+                if nav_back_box is None:
+                    raise AssertionError("Agent back button is not visible")
+                nav_back_is_frontmost = page.evaluate(
+                    """point => Boolean(
+                      document.elementFromPoint(point.x, point.y)?.closest('.nav-back')
+                    )""",
+                    {
+                        "x": nav_back_box["x"] + nav_back_box["width"] / 2,
+                        "y": nav_back_box["y"] + nav_back_box["height"] / 2,
+                    },
+                )
+                if not nav_back_is_frontmost:
+                    raise AssertionError("Agent back button is covered by timeline content")
+                nav_back.click()
                 page.wait_for_selector(".profile-stage")
                 page.wait_for_timeout(400)
                 agent_return = page.evaluate(
@@ -674,7 +689,7 @@ def main() -> int:
                 page.goto(f"{BASE_URL}/#/projects/solid-sim-lab", wait_until="networkidle")
                 page.evaluate("scrollTo(0, document.documentElement.scrollHeight)")
                 page.wait_for_timeout(250)
-                page.locator(".nav-back").evaluate("node => node.click()")
+                page.locator(".nav-back").click()
                 page.wait_for_selector(".profile-stage")
                 page.wait_for_timeout(400)
                 project_return = page.evaluate(
